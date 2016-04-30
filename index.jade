@@ -16,40 +16,51 @@ html
             window.$ = window.jQuery = require('./jquery-2.2.3.min');
         script(src='ui.js')
     body
-        table.mdl-data-table.mdl-js-data-table.mdl-data-table--selectable.mdl-shadow--2dp
+        table.mdl-data-table.mdl-js-data-table.mdl-data-table.mdl-shadow--2dp
             thead
                 tr
                     th.mdl-data-table__cell--non-numeric Gesture
-                    th.mdl-data-table__cell--non-numeric Action Type
                     th.mdl-data-table__cell--non-numeric Action
+                    //th.mdl-data-table__cell--non-numeric Action
             tbody
                 tr
                     - var name = "Move"
                     td.mdl-data-table__cell--non-numeric= name
                     td#ac1.actiontype
-                        include dropdown
-                    td
-                        .mdl-textfield.mdl-js-textfield
-                            input#move.mdl-textfield__input(type='text')
-                            label.mdl-textfield__label(for='move') Key
+                        label.mdl-switch.mdl-js-switch.mdl-js-ripple-effect(for='switch-2')
+                            input#switch-2.mdl-switch__input(type='checkbox')
+                            span.mdl-switch__label
+                    //td
+                    //    .mdl-textfield.mdl-js-textfield
+                    //        input#move.mdl-textfield__input(type='text')
+                    //        label.mdl-textfield__label(for='move') Key
                 tr
                     - var name = "Close Fist"
                     td.mdl-data-table__cell--non-numeric= name
                     td#ac2.actiontype
                         include dropdown
-                    td
-                        .mdl-textfield.mdl-js-textfield
-                            input#closefist.mdl-textfield__input(type='text')
-                            label.mdl-textfield__label(for='closefist') Key
+                    //td
+                    //    .mdl-textfield.mdl-js-textfield
+                    //        input#closefist.mdl-textfield__input(type='text')
+                    //        label.mdl-textfield__label(for='closefist') Key
                 tr
                     - var name = "Open Fist"
                     td.mdl-data-table__cell--non-numeric= name
                     td#ac3.actiontype
                         include dropdown
-                    td
-                        .mdl-textfield.mdl-js-textfield
-                            input#openfist.mdl-textfield__input(type='text')
-                            label.mdl-textfield__label(for='openfist') Key
+                    //td
+                    //    .mdl-textfield.mdl-js-textfield
+                    //        input#openfist.mdl-textfield__input(type='text')
+                    //        label.mdl-textfield__label(for='openfist') Key
+                tr
+                    - var name = "Thumbs Up"
+                    td.mdl-data-table__cell--non-numeric= name
+                    td#ac5.actiontype
+                        include dropdown
+                    //td
+                    //    .mdl-textfield.mdl-js-textfield
+                    //        input#openfist.mdl-textfield__input(type='text')
+                    //        label.mdl-textfield__label(for='thumbsup') Key
     script.
         // You can also require other files to run in this process
         require('./renderer.js');
