@@ -13,14 +13,14 @@ const BrowserWindow = electron.BrowserWindow
 let mainWindow
 
 function createWindow () {
-  // Create the browser window.
-  mainWindow = new BrowserWindow({width: 800, height: 600, icon:'fa-hand-paper-o_100_0_000000_none.png', resizable: false});
+  // Create the browser window. 296
+  mainWindow = new BrowserWindow({width: 295, height: 455, icon:'fa-hand-paper-o_100_0_000000_none.png', resizable: false});
 
   // and load the index.html of the app.
   mainWindow.loadURL('file://' + __dirname + '/index.jade')
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools()
+  // mainWindow.webContents.openDevTools()
   mainWindow.setMenu(null);
 
   // Emitted when the window is closed.

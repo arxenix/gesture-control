@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
     var keys = 'A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, LEFT_CLICK, RIGHT_CLICK, SPACE, ENTER, CTRL'.replace(/ /g, "").split(",");
     console.log(keys);
-    _(keys).chain().map(function(letter){return '<li class="mdl-menu__item">' + letter + '</li>'})
+    _(keys).chain().map(function(letter){return '<li class="mdl-menu__item">' + letter + '</li>'}).first(4)
         .each(function(elem) {$('.mdl-js-menu').append(elem)});
 
     $('.dropdown').keydown(function(event) {
@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 var regex = new RegExp("^" + val, "i");
                 console.log("val, " + regex.test(l));
                 return regex.test(l);
-            }).map(function(letter){return '<li class="mdl-menu__item">' + letter + '</li>'})
+            }).first(3).map(function(letter){return '<li class="mdl-menu__item">' + letter + '</li>'})
                 .each(function(elem) {
                     menu.append(elem);
                     resnum++;
