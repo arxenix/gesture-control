@@ -1,5 +1,8 @@
 const electron = require('electron')
 
+var locals = {/* ...*/};
+var j = require('electron-jade')({pretty: true}, locals);
+
 // Module to control application life.
 const app = electron.app
 // Module to create native browser window.
@@ -14,10 +17,10 @@ function createWindow () {
   mainWindow = new BrowserWindow({width: 800, height: 600, icon:'fa-hand-paper-o_100_0_000000_none.png'});
 
   // and load the index.html of the app.
-  mainWindow.loadURL('file://' + __dirname + '/index.html')
+  mainWindow.loadURL('file://' + __dirname + '/index.jade')
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools()
   mainWindow.setMenu(null);
 
   // Emitted when the window is closed.
