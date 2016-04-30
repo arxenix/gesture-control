@@ -29,7 +29,8 @@
     "node-getopt": ">=0.2.3",
     "node-gyp": "^2.0.1",
     "node-pre-gyp": "^0.6.7",
-    "robotjs": "^0.4.1"
+    "robotjs": "^0.4.1",
+    "socket.io-client": "^1.4.5"
   },
   "devDependencies": {
     "electron-prebuilt": "^0.37.8",

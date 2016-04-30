@@ -1,5 +1,11 @@
 const electron = require('electron')
 var _ = require('lodash');
+var socket = require('socket.io-client')('http://localhost:3535');
+
+socket.on('connect', function(){console.log("connected to robot socket");});
+socket.on('event', function(data){console.log(data);});
+socket.on('disconnect', function(){console.log("dc");});
+
 var Gesture = require('../lib/gesture');
 var robot = require("robotjs");
 var gesture = new Gesture.detector(0);
@@ -25,10 +31,41 @@ var screenWidth = screenSize.width;
 console.log("height: "+screenHeight);
 console.log("width: "+screenWidth);
 
-robot.moveMouse(0,0);
+var nA = {name: 'None'}
+var eventMap = {'palm_to_fist': nA,'palm_to_thumbsup': nA,'move_palm': nA};
+
+//temporarily hardcoded.. should be set through UI
+eventMap['move_palm']={'name': 'move_mouse'};
+eventMap['palm_to_fist']={'name': 'key_press', 'key': 'space'};
+
+
+var actionList = ['move_mouse', 'type'];
+var callEvent = function(eventName, data) {
+	var action = eventMap[eventName];
+	var actionName = action['name'];
+	if(actionName) {
+		console.log("executing action -> " + actionName);
+		if(actionName!=='None') {
+			if(actionName==='move_mouse') {
+				moveMouse(data.x, data.y);
+			}
+			else if(actionName==='key_press') {
+				robot.keyTap(action.key);
+			}
+		}
+	}
+	
+}
+
+
+var moveMouse = function(x, y) {
+	socket.emit('mouse', {x: x, y:y});
+};
+
 
 //events
 gesture.on('error', console.log);
+lastGesture = {"hand_type": -1};
 gesture.on('frame', function(data) {
 	data = JSON.parse(data);
 	//{"results":[{"hand_type":0,"height":167,"id":0,"width":167,"x":140,"xc":223,"y":147,"yc":230}]}
@@ -37,13 +74,15 @@ gesture.on('frame', function(data) {
 		if(hand.hand_type===0) {
 			var xpos = (camXmax-hand["xc"]) * screenWidth / camXmax;
 			var ypos = hand["yc"] * screenHeight / camYmax;
-			console.log("Moving to " + xpos + " " + ypos);
-			//robot.moveMouse(xpos, ypos);/
-			robot.keyTap("a");
-
+			callEvent('move_palm', {x: xpos, y: ypos});
 		}
-		//console.log(hand);
-		
+		if(hand.hand_type===1 && lastGesture.hand_type===0) {
+			callEvent('palm_to_fist', {});
+		}
+		if(hand.hand_type===2 && lastGesture.hand_type===0) {
+			callEvent('palm_to_thumbsup', {});
+		}
+		lastGesture = hand;
 	}
 });
 gesture.on('stop',  function(){
