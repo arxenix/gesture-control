@@ -14,7 +14,7 @@ let mainWindow
 
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 800, height: 600, icon:'fa-hand-paper-o_100_0_000000_none.png'});
+  mainWindow = new BrowserWindow({width: 800, height: 600, icon:'fa-hand-paper-o_100_0_000000_none.png', resizable: false});
 
   // and load the index.html of the app.
   mainWindow.loadURL('file://' + __dirname + '/index.jade')
