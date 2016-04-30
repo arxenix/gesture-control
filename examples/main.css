@@ -1,0 +1,12 @@
+body {
+    background-color: #EFEFEF;
+    overflow: hidden;
+}
+
+thead {
+    font-size: 18px;
+}
+
+tbody {
+    font-size: 16px;
+}

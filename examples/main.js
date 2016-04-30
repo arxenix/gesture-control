@@ -1,6 +1,8 @@
 const electron = require('electron')
 var _ = require('lodash');
-var socket = require('socket.io-client')('http://localhost:3535');
+var locals = {/* ...*/};
+var j = require('electron-jade')({pretty: true}, locals);
+var socket = require('socket.io-client')('http://192.168.26.1:3535');
 
 socket.on('connect', function(){console.log("connected to robot socket");});
 socket.on('event', function(data){console.log(data);});
@@ -47,21 +49,15 @@ var callEvent = function(eventName, data) {
 		console.log("executing action -> " + actionName);
 		if(actionName!=='None') {
 			if(actionName==='move_mouse') {
-				moveMouse(data.x, data.y);
+				socket.emit('move_mouse', data);
 			}
-			else if(actionName==='key_press') {
-				robot.keyTap(action.key);
+			else if(actionName==='key_tap') {
+				socket.emit('key_tap', action.key);
 			}
 		}
 	}
 	
 }
-
-
-var moveMouse = function(x, y) {
-	socket.emit('mouse', {x: x, y:y});
-};
-
 
 //events
 gesture.on('error', console.log);
@@ -100,13 +96,14 @@ let mainWindow
 
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 800, height: 600})
+  mainWindow = new BrowserWindow({width: 295, height: 455, icon:'fa-hand-paper-o_100_0_000000_none.png', resizable: false});
 
   // and load the index.html of the app.
-  mainWindow.loadURL('file://' + __dirname + '/index.html')
+  mainWindow.loadURL('file://' + __dirname + '/index.jade')
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools()
+  //mainWindow.webContents.openDevTools()
+  mainWindow.setMenu(null);
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
