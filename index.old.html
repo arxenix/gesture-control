@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Gesture Control</title>
+  <link rel="stylesheet" href="node_modules/material-design-lite/material.min.css">
+  <script src="node_modules/material-design-lite/material.min.js"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="main.css">
+
+  <!--getmdl-select-->
+  <script src="getmdl-select.min.js"></script>
+  <link rel="stylesheet" href="getmdl-select.min.css">
+
+  <script>window.$ = window.jQuery = require('./jquery-2.2.3.min');</script>
+  <script src="ui.js"></script>
+</head>
+<body>
+<table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
+  <thead>
+  <tr>
+    <th class="mdl-data-table__cell--non-numeric">Gesture</th>
+    <th class="mdl-data-table__cell--non-numeric">Action Type</th>
+    <th class="mdl-data-table__cell--non-numeric">Action</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td class="mdl-data-table__cell--non-numeric">Move</td>
+    <td class="actiontype" id="ac1"></td>
+    <td>
+      <div class="mdl-textfield mdl-js-textfield">
+        <input class="mdl-textfield__input" type="text" id="move">
+        <label class="mdl-textfield__label" for="move">Key</label>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td class="mdl-data-table__cell--non-numeric">Close Fist</td>
+    <td class="actiontype" id="ac2"></td>
+    <td>
+      <div class="mdl-textfield mdl-js-textfield">
+        <input class="mdl-textfield__input" type="text" id="closefist">
+        <label class="mdl-textfield__label" for="closefist">Key</label>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td class="mdl-data-table__cell--non-numeric">Open Fist</td>
+    <td class="actiontype" id="ac3"></td>
+    <td>
+      <div class="mdl-textfield mdl-js-textfield">
+        <input class="mdl-textfield__input" type="text" id="openfist">
+        <label class="mdl-textfield__label" for="openfist">Key</label>
+      </div>
+    </td>
+  </tr>
+  </tbody>
+</table>
+</body>
+
+<script>
+  // You can also require other files to run in this process
+  require('./renderer.js');
+</script>
+</html>
