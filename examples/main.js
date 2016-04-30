@@ -1,6 +1,55 @@
 const electron = require('electron')
+var _ = require('lodash');
 var Gesture = require('../lib/gesture');
+var robot = require("robotjs");
 var gesture = new Gesture.detector(0);
+
+var camXmax = 640;
+var camYmax = 480;
+
+//setup detection options
+gesture.setTimeToCountDetection(.3);
+gesture.setDraw(true);
+gesture.setShow(true);
+gesture.setFrameFlip(true);
+gesture.setOneHand(true);
+
+gesture.detectTrackStream([Gesture.PALM, Gesture.THUMB_UP, Gesture.FIST]);
+
+//Speed up the mouse.
+robot.setMouseDelay(2);
+
+var screenSize = robot.getScreenSize();
+var screenHeight = screenSize.height;
+var screenWidth = screenSize.width;
+console.log("height: "+screenHeight);
+console.log("width: "+screenWidth);
+
+robot.moveMouse(0,0);
+
+//events
+gesture.on('error', console.log);
+gesture.on('frame', function(data) {
+	data = JSON.parse(data);
+	//{"results":[{"hand_type":0,"height":167,"id":0,"width":167,"x":140,"xc":223,"y":147,"yc":230}]}
+	if(data["results"]) {
+		var hand = data["results"][0];
+		if(hand.hand_type===0) {
+			var xpos = (camXmax-hand["xc"]) * screenWidth / camXmax;
+			var ypos = hand["yc"] * screenHeight / camYmax;
+			console.log("Moving to " + xpos + " " + ypos);
+			//robot.moveMouse(xpos, ypos);/
+			robot.keyTap("a");
+
+		}
+		//console.log(hand);
+		
+	}
+});
+gesture.on('stop',  function(){
+	console.log("Detection process was stopped");
+});
+
 // Module to control application life.
 const app = electron.app
 // Module to create native browser window.
@@ -40,6 +89,7 @@ app.on('window-all-closed', function () {
   // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== 'darwin') {
     app.quit()
+    gesture.stop()
   }
 })
 
